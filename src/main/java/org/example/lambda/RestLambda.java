@@ -24,7 +24,7 @@ public class RestLambda {
      * @param context {@link Context}
      * @return {@link Address}
      */
-    public Address message(final Address address, final Context context) {
+    public Address create(final Address address, final Context context) {
 
         LOG.log(Level.INFO, context.getFunctionName());
         try {
