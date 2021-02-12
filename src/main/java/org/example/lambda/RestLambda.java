@@ -1,6 +1,8 @@
 package org.example.lambda;
 
+import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBMapper;
 import com.amazonaws.services.lambda.runtime.Context;
+import org.example.lambda.config.DynamoConfig;
 import org.example.lambda.model.Address;
 
 import java.util.logging.Level;
@@ -25,12 +27,12 @@ public class RestLambda {
     public Address create(final Address address, final Context context) {
 
         LOG.log(Level.INFO, context.getFunctionName());
-//        try {
-//            DynamoDBMapper instance = DynamoConfig.getInstance();
-//            instance.save(address);
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//        }
+        try {
+            DynamoDBMapper instance = DynamoConfig.getInstance();
+            instance.save(address);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 //        address.setLine1("my change goes here");
         return address;
     }

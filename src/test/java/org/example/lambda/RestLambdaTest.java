@@ -3,6 +3,7 @@ package org.example.lambda;
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBMapper;
 import com.amazonaws.services.dynamodbv2.model.CreateTableRequest;
 import com.amazonaws.services.dynamodbv2.model.ProvisionedThroughput;
+import com.amazonaws.services.dynamodbv2.model.ResourceNotFoundException;
 import org.example.lambda.config.DynamoConfig;
 import org.example.lambda.model.Address;
 import org.example.lambda.util.TestContext;
@@ -23,8 +24,12 @@ class RestLambdaTest {
         restLambda = new RestLambda();
         DynamoDBMapper instance = DynamoConfig.getInstance();
         CreateTableRequest createTableRequest = instance.generateCreateTableRequest(Address.class);
-        createTableRequest.withProvisionedThroughput(new ProvisionedThroughput(10L,10L));
-        DynamoConfig.dynamoDB().deleteTable(createTableRequest.getTableName());
+        createTableRequest.withProvisionedThroughput(new ProvisionedThroughput(10L, 10L));
+        try {
+            DynamoConfig.dynamoDB().deleteTable(createTableRequest.getTableName());
+        } catch (ResourceNotFoundException rnfe) {
+            System.out.println("Table not found creating.");
+        }
         DynamoConfig.dynamoDB().createTable(createTableRequest);
     }
 
@@ -39,10 +44,10 @@ class RestLambdaTest {
         address.setLocation("Location");
 
         // When
-        Address createdAddress = restLambda.create(address,new TestContext());
+        Address createdAddress = restLambda.create(address, new TestContext());
 
         // Then
-        Assertions.assertNotNull(createdAddress.getId(),"Address Created Successfully");
+        Assertions.assertNotNull(createdAddress.getId(), "Address Created Successfully");
 //        Assertions.assertNotNull(createdAddress.getLine1(),"my change goes here");
     }
 }
