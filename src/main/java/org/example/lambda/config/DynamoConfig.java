@@ -11,7 +11,7 @@ import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBMapperConfig;
 
 public final class DynamoConfig {
 
-    /*
+    /**
      * DynamoDB accessKey.
      */
     private static final String ACCESS_KEY = System.getenv("ACCESS_KEY");
@@ -19,14 +19,17 @@ public final class DynamoConfig {
     /**
      * DynamoDB secretKey.
      */
-    private static final String SECRET_KEY= System.getenv("SECRET_KEY");
+    private static final String SECRET_KEY = System.getenv("SECRET_KEY");
 
     /**
      * DynamoDB mapper.
      */
     private static final DynamoDBMapper MAPPER = createInstance();
 
-    private static AmazonDynamoDB dynamoDB ;
+    /**
+     * DynamoDB .
+     */
+    private static AmazonDynamoDB dynamoDB;
 
     private DynamoConfig() {
     }
@@ -34,16 +37,19 @@ public final class DynamoConfig {
     private static DynamoDBMapper createInstance() {
 
 
-
-        if( ACCESS_KEY == null ) {
+        if (ACCESS_KEY == null) {
             dynamoDB = AmazonDynamoDBClientBuilder.standard()
-                    .withEndpointConfiguration(new AwsClientBuilder.EndpointConfiguration("http://localhost:8000",Regions.US_EAST_1.getName()))
+                    .withEndpointConfiguration(
+                            new AwsClientBuilder.EndpointConfiguration(
+                                    "http://localhost:8000",
+                                    Regions.US_EAST_1.getName()))
                     .withCredentials(
                             new AWSStaticCredentialsProvider(
-                                    new BasicAWSCredentials("fakeMyKeyId", "fakeSecretAccessKey")))
+                                    new BasicAWSCredentials(
+                                            "fakeMyKeyId",
+                                            "fakeSecretAccessKey")))
                     .build();
-        }
-        else {
+        } else {
             dynamoDB = AmazonDynamoDBClientBuilder
                     .standard()
                     .withCredentials(new AWSStaticCredentialsProvider(
