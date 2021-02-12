@@ -73,7 +73,7 @@
 							<hooks>
 								<pre-commit>
 									echo "Validating..."
-									exec mvn test
+									exec ./mvnw checkstyle:checkstyle test
 								</pre-commit>
 							</hooks>
 						</configuration>
