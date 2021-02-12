@@ -17,8 +17,12 @@ class MyArchitectureTest {
                 .withImportOption(new ImportOption.DoNotIncludeJars())
                 .importPackages("org.example.lambda");
         ArchRule rule = classes().should().onlyAccessClassesThat()
-                .resideInAnyPackage("java.lang"
-                        ,"org.example.lambda");
+                .resideInAnyPackage("java.lang..",
+                        "java.io..",
+                        "java.util.."
+                        ,"org.example.lambda.."
+                                ,"com.amazonaws.."
+                ,"java.util.logging");
         rule.check(importedClasses);
     }
 }
