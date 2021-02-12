@@ -61,59 +61,22 @@
 	<build>
 		<plugins>
 			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-antrun-plugin</artifactId>
-				<version>1.8</version>
+				<groupId>io.github.phillipuniverse</groupId>
+				<artifactId>githook-maven-plugin</artifactId>
+				<version>1.0.5</version>
 				<executions>
 					<execution>
-						<id>download-hooks</id>
-						<phase>initialize</phase>
 						<goals>
-							<goal>run</goal>
+							<goal>install</goal>
 						</goals>
 						<configuration>
-							<failOnError>false</failOnError>
-							<target>
-								<taskdef resource="net/sf/antcontrib/antcontrib.properties" />
-								<if>
-									<available file="${basedir}/etc/git-hooks/v${git.hooks.version}" />
-									<else>
-										<delete dir="${basedir}/etc/git-hooks/" />
-										<get src="https://github.com/rudikershaw/client-git-hooks/releases/download/${git.hooks.version}/git-hooks.zip"
-											 dest="${project.build.directory}/git-hooks.zip" />
-										<unzip src="${project.build.directory}/git-hooks.zip" dest="${basedir}/etc" />
-										<chmod dir="${basedir}/etc/git-hooks/" includes="**/**" perm="700" />
-										<touch file="${basedir}/etc/git-hooks/v${git.hooks.version}" />
-									</else>
-								</if>
-							</target>
+							<hooks>
+								<pre-commit>
+									echo "Validating..."
+									exec mvn test
+								</pre-commit>
+							</hooks>
 						</configuration>
-					</execution>
-				</executions>
-				<dependencies>
-					<dependency>
-						<groupId>ant-contrib</groupId>
-						<artifactId>ant-contrib</artifactId>
-						<version>20020829</version>
-					</dependency>
-				</dependencies>
-			</plugin>
-			<plugin>
-				<groupId>com.rudikershaw.gitbuildhook</groupId>
-				<artifactId>git-build-hook-maven-plugin</artifactId>
-				<version>3.0.0</version>
-				<configuration>
-					<gitConfig>
-						<core.hooksPath>etc/git-hooks/</core.hooksPath>
-						<hooks.commitmsgregex>(\w+\s){3,}(\w+\.)</hooks.commitmsgregex>
-					</gitConfig>
-				</configuration>
-				<executions>
-					<execution>
-						<goals>
-							<goal>initialize</goal>
-							<goal>configure</goal>
-						</goals>
 					</execution>
 				</executions>
 			</plugin>
