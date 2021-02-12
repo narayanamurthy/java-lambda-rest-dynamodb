@@ -6,7 +6,7 @@
 	<artifactId>java-lambda-ref</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>Java Lambda Playground</name>
-	<description>Playground for Java Lambda</description>
+	<description>Playground for Java Lambda Dymano</description>
 
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
