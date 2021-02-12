@@ -62,6 +62,26 @@
 		<plugins>
 
 			<plugin>
+				<groupId>com.rudikershaw.gitbuildhook</groupId>
+				<artifactId>git-build-hook-maven-plugin</artifactId>
+				<version>3.0.0</version>
+				<configuration>
+					<gitConfig>
+						<core.hooksPath>etc/git-hooks/</core.hooksPath>
+						<hooks.commitmsgregex>(\w+\s){3,}(\w+\.)</hooks.commitmsgregex>
+					</gitConfig>
+				</configuration>
+				<executions>
+					<execution>
+						<goals>
+							<goal>initialize</goal>
+							<goal>configure</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+
+			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-shade-plugin</artifactId>
 				<version>3.2.4</version>
