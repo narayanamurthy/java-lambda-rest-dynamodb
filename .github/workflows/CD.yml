@@ -31,6 +31,6 @@ jobs:
           function_name: brd-lambda
           zip_file: target/java-lambda-ref-0.0.1-SNAPSHOT.jar
           memory_size: 128
-          timeout: 10
+          timeout: 30
           handler: org.example.lambda.RestLambda::create
           runtime: java11

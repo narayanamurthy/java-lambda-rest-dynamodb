@@ -43,5 +43,6 @@ class RestLambdaTest {
 
         // Then
         Assertions.assertNotNull(createdAddress.getId(),"Address Created Successfully");
+//        Assertions.assertNotNull(createdAddress.getLine1(),"my change goes here");
     }
 }
