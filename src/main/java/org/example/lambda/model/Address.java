@@ -37,9 +37,6 @@ public class Address {
     @DynamoDBAttribute
     private String line2;
 
-    /**
-     * line3.
-     */
     @DynamoDBAttribute
     private String line3;
 }
