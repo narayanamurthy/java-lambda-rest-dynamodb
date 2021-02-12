@@ -1,5 +1,9 @@
 package org.example.lambda;
 
+import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBMapper;
+import com.amazonaws.services.dynamodbv2.model.CreateTableRequest;
+import com.amazonaws.services.dynamodbv2.model.ProvisionedThroughput;
+import org.example.lambda.config.DynamoConfig;
 import org.example.lambda.model.Address;
 import org.example.lambda.util.TestContext;
 import org.junit.jupiter.api.Assertions;
@@ -17,6 +21,11 @@ class RestLambdaTest {
     @BeforeEach
     private void init() {
         restLambda = new RestLambda();
+        DynamoDBMapper instance = DynamoConfig.getInstance();
+        CreateTableRequest createTableRequest = instance.generateCreateTableRequest(Address.class);
+        createTableRequest.withProvisionedThroughput(new ProvisionedThroughput(10L,10L));
+        DynamoConfig.dynamoDB().deleteTable(createTableRequest.getTableName());
+        DynamoConfig.dynamoDB().createTable(createTableRequest);
     }
 
 

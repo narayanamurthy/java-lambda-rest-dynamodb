@@ -1,6 +1,8 @@
 package org.example.lambda;
 
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBMapper;
+import com.amazonaws.services.dynamodbv2.model.CreateTableRequest;
+import com.amazonaws.services.dynamodbv2.model.ProvisionedThroughput;
 import com.amazonaws.services.lambda.runtime.Context;
 import org.example.lambda.config.DynamoConfig;
 import org.example.lambda.model.Address;
@@ -31,7 +33,7 @@ public class RestLambda {
             DynamoDBMapper instance = DynamoConfig.getInstance();
             instance.save(address);
         } catch (Exception e) {
-            LOG.log(Level.SEVERE, e.getMessage());
+            e.printStackTrace();
         }
         return address;
     }

@@ -14,24 +14,26 @@ public final class DynamoConfig {
     /*
      * DynamoDB accessKey.
      */
-    private static final String ACCESS_KEY = System.getenv("AWS_ACCESS_KEY");
+    private static final String ACCESS_KEY = System.getenv("ACCESS_KEY");
 
     /**
      * DynamoDB secretKey.
      */
-    private static final String SECRET_KEY= System.getenv("AWS_SECRET_KEY");
+    private static final String SECRET_KEY= System.getenv("SECRET_KEY");
 
     /**
      * DynamoDB mapper.
      */
     private static final DynamoDBMapper MAPPER = createInstance();
 
+    private static AmazonDynamoDB dynamoDB ;
+
     private DynamoConfig() {
     }
 
     private static DynamoDBMapper createInstance() {
 
-        AmazonDynamoDB dynamoDB ;
+
 
         if( ACCESS_KEY == null ) {
             dynamoDB = AmazonDynamoDBClientBuilder.standard()
@@ -61,6 +63,15 @@ public final class DynamoConfig {
      */
     public static DynamoDBMapper getInstance() {
         return MAPPER;
+    }
+
+    /**
+     * DDDD.
+     *
+     * @return {@link DynamoDBMapper}
+     */
+    public static AmazonDynamoDB dynamoDB() {
+        return dynamoDB;
     }
 }
 
